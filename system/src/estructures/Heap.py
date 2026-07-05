@@ -17,11 +17,11 @@ class Heap:
 
         while nodeIdx > 0: # Con NodeIdx 0 o 1 da 0 o -1, por lo tanto parentIdx nunca se podria salir del arreglo.
             parentIdx = (nodeIdx - 1) // 2 # Indice del padre
-            if not self.siftUp(nodeIdx, parentIdx):
+            if not self._siftUp(nodeIdx, parentIdx):
                 break
             nodeIdx = parentIdx # Si hubo switch, re asignar nuevos indices
 
-    def siftUp(self, nodeIdx, parentIdx):
+    def _siftUp(self, nodeIdx, parentIdx):
         arr = self.btree
         if arr[nodeIdx] > arr[parentIdx]:
             arr[nodeIdx], arr[parentIdx] = arr[parentIdx], arr[nodeIdx] # Switch
@@ -41,11 +41,11 @@ class Heap:
         max = self.btree[0]
         self.btree[0] = self.btree.pop()
 
-        self.siftDown(0)
+        self._siftDown(0)
 
         return max
     
-    def siftDown(self, parent):
+    def _siftDown(self, parent):
         arr = self.btree
         n = len(arr)
 
@@ -78,4 +78,4 @@ class Heap:
         lastParent = (n // 2) - 1 # Division entera
 
         for i in range(lastParent, -1, -1): # Recorrido inverso
-            self.siftDown(i)
+            self._siftDown(i)
