@@ -1,3 +1,8 @@
 system/src/utils/__pycache__/CSVReader.cpython-314.pyc
 system/src/models/__pycache__/RoadNetwork.cpython-314.pyc
 system/src/estructures/__pycache__/HashTable.cpython-314.pyc
+system/src/models/__pycache__/EmergencyCenter.cpython-314.pyc
+system/src/models/__pycache__/Incident.cpython-314.pyc
+system/src/services/__pycache__/Arrays.cpython-314.pyc
+system/src/structures/__pycache__/HashTable.cpython-314.pyc
+system/src/structures/__pycache__/Heap.cpython-314.pyc

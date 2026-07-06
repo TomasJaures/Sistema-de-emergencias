@@ -1,6 +1,8 @@
 import math
 
-#Max heap
+"""
+MAX HEAP
+"""
 class Heap:
     def __init__(self):
         self.btree = []

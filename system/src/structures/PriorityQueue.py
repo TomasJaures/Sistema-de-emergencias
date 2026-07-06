@@ -1,6 +1,9 @@
 from estructures.Heap import Heap
 
 class PriorityQueue:
+
+    # arr[nodeIdx] > arr[parentIdx]
+    # Considerar esto al crear la clase que se inserte en PriorityQueue
     def __init__(self):
         self.heap = Heap() #Heap creado!
 
