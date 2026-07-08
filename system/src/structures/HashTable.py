@@ -28,7 +28,7 @@ class HashTable:
             self._usedBuckets += 1
         else:
             # Cada vez que un elemento caiga en una lista no vacia, se suma una colision
-            self.collisions += 1
+            self._collisions += 1
 
         #Se inserta la clave y el valor (Tupla)
         bucket.append((key, value))
@@ -60,7 +60,7 @@ class HashTable:
         for i, (k, v) in enumerate(bucket):
             if k == key:
                 bucket.pop(i)
-                self.elementSize -= 1
+                self._elementSize -= 1
 
                 # Si el bucket estaba vacio, restar un userBuckets
                 if len(bucket) == 0:    

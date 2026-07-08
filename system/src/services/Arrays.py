@@ -12,7 +12,7 @@ class Arrays:
         return result[::-1] # De menor a mayor
     
     @staticmethod
-    def quickSort(array, low=0, high=None):
+    def quickSort(array: list, low=0, high=None) -> list:
         if high is None:
             high = len(array) - 1 # Pivote al final al inicio (Casos completamente desordenados)
 
@@ -21,7 +21,6 @@ class Arrays:
             Arrays.quickSort(array, low, pivot_index-1)
             Arrays.quickSort(array, pivot_index+1, high)
         return array
-
 
     @staticmethod
     def _partition(array, low, high):
