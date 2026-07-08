@@ -55,23 +55,42 @@ def main():
     graph.addEdge(p, n, 5, addressed=True)
     graph.addEdge(p, k, 10, addressed=True)
 
+#    print("=" * 30)
+#    print("NODOS DEL GRAFO (DESORDENADOS):")
+#    print("=" * 30, "\n")
+#    graph.show()
+
+#    current, path, visited = SearchAlgorithm.bfs(a, isNode)
+
+#    print("=" * 30)
+#    print("BREAD FIRST SEARCH: ")
+#    print("=" * 30, "\n")
+#
+#    print(f"Nodo final: {current.data}")
+#    print(f"Camino encontrado: {path}")
+#    print(f"Nodos visitados: {visited}")
+
     print("=" * 30)
-    print("NODOS DEL GRAFO (DESORDENADOS):")
+    print("DJIKSTRA: ")
     print("=" * 30, "\n")
-    graph.show()
 
-    def isNode(node):
-        return node.data == p.data
-
-    current, path, visited = SearchAlgorithm.bfs(a, isNode)
-
-    print("=" * 30)
-    print("BREAD FIRST SEARCH: ")
-    print("=" * 30, "\n")
+    current, path, visited, currentDistance = SearchAlgorithm.dijkstra(a, lambda node: node.data == p.data)
 
     print(f"Nodo final: {current.data}")
     print(f"Camino encontrado: {path}")
     print(f"Nodos visitados: {visited}")
+    print(f"Current Distance: {currentDistance}")
+
+    print("=" * 30)
+    print("DJIKSTRA: ")
+    print("=" * 30, "\n")
+
+    current, path, visited, currentDistance = SearchAlgorithm.dijkstra(a, lambda node: node.data == b.data)
+
+    print(f"Nodo final: {current.data}")
+    print(f"Camino encontrado: {path}")
+    print(f"Nodos visitados: {visited}")
+    print(f"Current Distance: {currentDistance}")
     
 
     
