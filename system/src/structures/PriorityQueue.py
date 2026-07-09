@@ -1,4 +1,4 @@
-from estructures.Heap import Heap
+from structures.Heap import Heap
 
 class PriorityQueue:
 
@@ -22,5 +22,8 @@ class PriorityQueue:
     def size(self):
         return (len(self.heap.btree))
 
+    def pushAll(self, arr: list):
+        self.heap.buildHeap(arr)
+    
     def top(self, k):
         self.heap.topK(k)

@@ -1,5 +1,5 @@
 from .Node import Node
-from structures.HashTable import HashTable
+# from structures.HashTable import HashTable
 
 class Graph:
     def __init__(self):

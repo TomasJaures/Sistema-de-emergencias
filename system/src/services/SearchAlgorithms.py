@@ -3,7 +3,7 @@ from structures.Graphs.Node import Node
 from structures.HashTable import HashTable
 from structures.Heap import Heap
 
-class SearchAlgorithm:
+class SearchAlgorithms:
 
     @staticmethod
     def bfs(startNode: Node, condition):

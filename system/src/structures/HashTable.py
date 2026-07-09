@@ -6,6 +6,7 @@ class HashTable:
         self._elementSize = 0
         self._collisions = 0
         self._usedBuckets = 0
+        self.keys = set()
 
     # _hashpolinomial
     def _hash(self, key):
@@ -22,6 +23,7 @@ class HashTable:
         return self._elementSize / self.capacity
 
     def insert(self, key, value):
+        self.keys.add(key)
         bucket = self._buckets[self._hash(key)]
 
         if len(bucket) == 0:
@@ -56,10 +58,10 @@ class HashTable:
 
     def remove(self, key):
         bucket = self._buckets[self._hash(key)]
-
         for i, (k, v) in enumerate(bucket):
             if k == key:
                 bucket.pop(i)
+                self.keys.remove(key)
                 self._elementSize -= 1
 
                 # Si el bucket estaba vacio, restar un userBuckets
@@ -81,3 +83,6 @@ class HashTable:
     def generateReport():
         # TODO: Hacer reporte
         print("[!] Falta hacer esta parte del codigo...")    
+
+    def getKeys(self) -> set:
+        return self.keys

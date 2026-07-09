@@ -4,7 +4,7 @@ import os
 ## Para importar de otras carpetas
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
-from services.SearchAlgorithms import SearchAlgorithm
+from services.SearchAlgorithms import SearchAlgorithms
 from structures.Graphs.Graph import Graph
 from structures.Graphs.Node import Node
 
@@ -86,7 +86,7 @@ class TestDijkstra(unittest.TestCase):
 
     def test_shortest_path_A_to_P(self):
 
-        result = SearchAlgorithm.dijkstra(
+        result = SearchAlgorithms.dijkstra(
             self.a,
             lambda node: node.data == "P"
         )
@@ -103,7 +103,7 @@ class TestDijkstra(unittest.TestCase):
 
     def test_shortest_path_A_to_C(self):
 
-        result = SearchAlgorithm.dijkstra(
+        result = SearchAlgorithms.dijkstra(
             self.a,
             lambda node: node.data == "C"
         )
@@ -127,7 +127,7 @@ class TestDijkstra(unittest.TestCase):
         # Existen varios nodos que podrian cumplir
         # La condicion busca el primero encontrado por menor costo
 
-        result = SearchAlgorithm.dijkstra(
+        result = SearchAlgorithms.dijkstra(
             self.a,
             lambda node: node.data in ["E", "J"]
         )
@@ -146,9 +146,9 @@ class TestDijkstra(unittest.TestCase):
         self.assertEqual(weight, 11)
     
     def test_dijkstra_multiple_execution_same_graph(self):
-        result1 = SearchAlgorithm.dijkstra(self.a,lambda node: node.data == "P")
+        result1 = SearchAlgorithms.dijkstra(self.a,lambda node: node.data == "P")
         target1, path1, visited1, weight1 = result1
-        result2 = SearchAlgorithm.dijkstra(self.a, lambda node: node.data == "C")
+        result2 = SearchAlgorithms.dijkstra(self.a, lambda node: node.data == "C")
 
         target2, path2, visited2, weight2 = result2
 
@@ -164,7 +164,7 @@ class TestDijkstra(unittest.TestCase):
 
     def test_node_not_found(self):
 
-        result = SearchAlgorithm.dijkstra(
+        result = SearchAlgorithms.dijkstra(
             self.a,
             lambda node: node.data == "Z"
         )
