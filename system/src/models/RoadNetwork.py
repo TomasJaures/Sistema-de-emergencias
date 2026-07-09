@@ -40,24 +40,27 @@ class RoadNetwork:
         for origin, target, weight in edges:
             self.addEdge(origin, target, weight)
     
-    def addCenter(self, id, name: str, place):
-        center = EmergencyCenter(id, name, place)
-        self.centers.insert(id, center)
-        node = self.nodes.search(place)
+
+    def addCenter(self, center: EmergencyCenter):
+        self.centers.insert(center.id, center)
+        node = self.nodes.search(center.location)
         node.data = center
     
-    def addIncident(self, id, place, severity):
-        incident = Incident(id, place, severity)
-        self.incidents.insert(id, incident)
-        node = self.nodes.search(place)
+    def addIncident(self, incident: Incident):
+        self.incidents.insert(incident.id, incident)
+        node = self.nodes.search(incident.location)
         node.data = incident
 
     def calculateIncidentSeverity(self, id) -> Incident:
         incident = self.incidents.search(id)
-        node = self.nodes.search(incident.place)
+        node = self.nodes.search(incident.location)
 
-        _, _, _, weight = SearchAlgorithms.dijkstra(node, lambda current: isinstance(current.data, EmergencyCenter))
+        centerNode, path, _, weight = SearchAlgorithms.dijkstra(node, lambda current: isinstance(current.data, EmergencyCenter))
+
         incident.calculatePriority(weight)
+        incident.closestPath = path
+        incident.closestCenter = centerNode.data
+
         self.worstIncidents.push(incident)
         return incident
         
@@ -68,4 +71,3 @@ class RoadNetwork:
             incidents.append(self.calculateIncidentSeverity(key))
         self.worstIncidents.pushAll(incidents) # Heapify
         return self.worstIncidents
-        

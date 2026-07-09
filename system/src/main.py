@@ -4,14 +4,17 @@ from services.SearchAlgorithms import SearchAlgorithms
 from models.RoadNetwork import RoadNetwork
 from models.Incident import Incident
 from models.EmergencyCenter import EmergencyCenter
+from datetime import datetime
+from utils.IncidentState import IncidentState
+from EmergencySystem import EmergencySystem
 
 def main():
     # path = Path(__file__).parent.parent / "docs" / "graphs" / "graph1.csv"
 
-    map = RoadNetwork(True)
-    map.addNodes(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"])
+    rn = RoadNetwork(True)
+    rn.addNodes(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"])
 
-    map.addEdges([
+    rn.addEdges([
         ("A", "B", 4 ),
         ("B", "C", 2 ),
         ("B", "D", 3 ),
@@ -42,9 +45,25 @@ def main():
         ("P", "K", 10)        
     ])
 
-    map.addCenter(0, "Centro A", "P")
-    map.addIncident(1, "A", 10)
-    print(map.calculateIncidentSeverity(1))
+
+    
+    rn.addCenter(EmergencyCenter(0, "Centro A", "P"))
+    rn.addIncident(Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE))
+    rn.addIncident(Incident(2, "E", 5, datetime(2026, 7, 4), IncidentState.ACTIVE))
+    rn.addIncident(Incident(3, "I", 7, datetime(2026, 7, 4), IncidentState.ACTIVE))
+
+    pq = rn.calculateAllIncidentSeverity()
+
+    system = EmergencySystem(rn)
+
+
+    # datetime(año, mes, día, hora, minuto, segundo)
+    date = datetime(2026, 7, 9, 15, 30, 0)
+    date = datetime(2026, 7, 3, 15, 30, 0)
+    # Buscar la ruta óptima desde el centro de emergencia más cercano.    
+    #- Incidentes más antiguos: Ordenados por tiempo.
+    # - Incidentes más críticos: Ordenados por prioridad.
+    # - Zonas con más incidentes: Ordenadas por frecuencia.
 
 
     

@@ -1,4 +1,6 @@
 from collections import deque
+from numbers import Number
+from typing import Callable
 from structures.Graphs.Node import Node
 from structures.HashTable import HashTable
 from structures.Heap import Heap
@@ -6,7 +8,7 @@ from structures.Heap import Heap
 class SearchAlgorithms:
 
     @staticmethod
-    def bfs(startNode: Node, condition):
+    def bfs(startNode: Node, condition: Callable[[Node], bool]):
         q = deque([startNode])
         visited = set([startNode])
         visitedDisplay = [startNode]
@@ -35,7 +37,7 @@ class SearchAlgorithms:
         return None
 
     @staticmethod
-    def dijkstra(startNode: Node, condition):
+    def dijkstra(startNode: Node, condition: Callable[[Node], bool]) -> tuple[Node, list, list, Number]:
         heap = Heap() # Max heap
         previous = HashTable(capacity=1000)
         distances = HashTable(capacity=1000)
