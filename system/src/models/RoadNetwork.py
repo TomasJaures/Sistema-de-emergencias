@@ -39,35 +39,3 @@ class RoadNetwork:
     def addEdges(self, edges: list[tuple] ):
         for origin, target, weight in edges:
             self.addEdge(origin, target, weight)
-    
-
-    def addCenter(self, center: EmergencyCenter):
-        self.centers.insert(center.id, center)
-        node = self.nodes.search(center.location)
-        node.data = center
-    
-    def addIncident(self, incident: Incident):
-        self.incidents.insert(incident.id, incident)
-        node = self.nodes.search(incident.location)
-        node.data = incident
-
-    def calculateIncidentSeverity(self, id) -> Incident:
-        incident = self.incidents.search(id)
-        node = self.nodes.search(incident.location)
-
-        centerNode, path, _, weight = SearchAlgorithms.dijkstra(node, lambda current: isinstance(current.data, EmergencyCenter))
-
-        incident.calculatePriority(weight)
-        incident.closestPath = path
-        incident.closestCenter = centerNode.data
-
-        self.worstIncidents.push(incident)
-        return incident
-        
-    def calculateAllIncidentSeverity(self) -> PriorityQueue:
-        keys = self.incidents.getKeys()
-        incidents = []
-        for key in keys:
-            incidents.append(self.calculateIncidentSeverity(key))
-        self.worstIncidents.pushAll(incidents) # Heapify
-        return self.worstIncidents

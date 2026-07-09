@@ -27,7 +27,7 @@ class SearchAlgorithms:
                 path.reverse()
                 return current, path, visitedDisplay
 
-            for adjacency, weight in current.adjacencies:
+            for adjacency, _ in current.adjacencies:
                 if adjacency not in visited:
                     visited.add(adjacency)
                     visitedDisplay.append(adjacency)
@@ -51,7 +51,7 @@ class SearchAlgorithms:
 
         heap.insert(startNode)
 
-        while heap.btree:
+        while heap._btree:
             current = heap.extract()
             if current in visited:
                 continue

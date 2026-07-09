@@ -46,24 +46,54 @@ def main():
     ])
 
 
-    
-    rn.addCenter(EmergencyCenter(0, "Centro A", "P"))
-    rn.addIncident(Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE))
-    rn.addIncident(Incident(2, "E", 5, datetime(2026, 7, 4), IncidentState.ACTIVE))
-    rn.addIncident(Incident(3, "I", 7, datetime(2026, 7, 4), IncidentState.ACTIVE))
 
-    pq = rn.calculateAllIncidentSeverity()
 
     system = EmergencySystem(rn)
 
+    center1 = EmergencyCenter(0, "Centro A", "P")
+    incident1 = Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE)
+    system.insertCenter(center1)
+    system.insertIncident(incident1)
+    system.insertIncident(Incident(2, "E", 5, datetime(2026, 5, 1), IncidentState.ACTIVE))
+    system.insertIncident(Incident(3, "I", 7, datetime(2026, 6, 2), IncidentState.ACTIVE))
+    
+    print(system.searchIncident(1).toString())
+    system.updateIncidentState(1, IncidentState.CLOSED)
+    print(system.searchIncident(1).toString())
+    
+    # removedIncident = system.removeIncident(1)
+    # if removedIncident is not None:
+    #     print("=== ELIMINADO ===")
+    #     print(removedIncident.toString())
+    #     system.insertIncident(Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE))
+    # else:
+    #     print("=== ERROR ===")
+    
+    print(f"Tabla hash de incidentes\n{system.getIncidentsHashTableStats()}")
 
-    # datetime(año, mes, día, hora, minuto, segundo)
-    date = datetime(2026, 7, 9, 15, 30, 0)
-    date = datetime(2026, 7, 3, 15, 30, 0)
-    # Buscar la ruta óptima desde el centro de emergencia más cercano.    
-    #- Incidentes más antiguos: Ordenados por tiempo.
-    # - Incidentes más críticos: Ordenados por prioridad.
-    # - Zonas con más incidentes: Ordenadas por frecuencia.
+    print(f"Incidente mas urgente:\n {system.getMostUrgentIncident().toString()}")
+
+    print(f"K incidentes mas criticos")
+    for i in system.getKIncidentsMostCritic(3):
+        print(f"Prioridad: {i.priority}")
+
+    print("Incidentes por tiempo: ")
+    for i in system.getIncidentsByTime():
+        print(f"Tiempo: {i.timestamp}")
+    
+    print("Incidentes por prioridad")
+    for i in system.getIncidentsByPriority():
+        print(f"Prioridad: {i.priority}")
+
+    print("Desde algun centro al incidente: ")
+    routeFound, visitedNodes, totalDistance = system.mostEfficientRouteFromCenterToIncident(center1, incident1)
+    print(f"ruta encontrada: {routeFound}")
+    print(f"Nodos visitados: {visitedNodes}")
+    print(f"Distancia total: {totalDistance}")
+    
+    print(f"Ruta mas eficiente segun BFS: {system.mostEfficientRouteToIncidentByBFS(incident1)}")
+    print(f"Ruta mas eficiente segun Djikstra: {system.mostEfficientRouteToIncidentByDjikstra(incident1)}")
+    
 
 
     

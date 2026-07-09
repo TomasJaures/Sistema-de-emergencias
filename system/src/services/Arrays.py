@@ -7,7 +7,7 @@ class Arrays:
         result = []
         heap = Heap()
         heap.buildHeap(arr)
-        while heap.btree:
+        while heap._btree:
             result.append(heap.extract())
         return result[::-1] # De menor a mayor
     

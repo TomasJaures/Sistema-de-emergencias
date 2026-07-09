@@ -16,13 +16,16 @@ class HashTable:
 
         for c in key:
             h = (h * base + ord(c)) % self.capacity
-
         return h
 
     def loadFactor(self):
         return self._elementSize / self.capacity
 
     def insert(self, key, value):
+
+        if key in self.keys:
+            return False #Si ya se encuentra la llave
+
         self.keys.add(key)
         bucket = self._buckets[self._hash(key)]
 
@@ -31,10 +34,11 @@ class HashTable:
         else:
             # Cada vez que un elemento caiga en una lista no vacia, se suma una colision
             self._collisions += 1
-
+        
         #Se inserta la clave y el valor (Tupla)
         bucket.append((key, value))
         self._elementSize += 1
+        return True
 
     def search(self, key):
         bucket = self._buckets[self._hash(key)]
@@ -80,9 +84,19 @@ class HashTable:
 
         return max
     
-    def generateReport():
-        # TODO: Hacer reporte
-        print("[!] Falta hacer esta parte del codigo...")    
-
     def getKeys(self) -> set:
         return self.keys
+
+    def getStats(self):
+        # TODO: Hacer reporte
+        # loadFactor = self.loadFactor()
+        # maxBucketSize = self.maxBuckEtelementSize()
+        return (
+            f"Factor de carga: {self.loadFactor()}\n"
+            f"Colisiones: {self._collisions}\n"
+            f"Buckets utilizados: {self._usedBuckets}\n"
+            f"Máximo tamaño de bucket: {self.maxBuckEtelementSize()}"
+        )
+        
+
+    
