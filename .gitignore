@@ -14,3 +14,6 @@ system/src/__pycache__/EmergencySystem.cpython-314.pyc
 system/src/utils/__pycache__/IncidentState.cpython-314.pyc
 system/src/utils/__pycache__/FormatterCSV.cpython-314.pyc
 system/src/utils/CSV/__pycache__/FormatterCSV.cpython-314.pyc
+system/src/structures/__pycache__/MinHeap.cpython-314.pyc
+system/src/utils/__pycache__/IncidentTypes.cpython-314.pyc
+system/src/utils/CSV/__pycache__/DatasetManager.cpython-314.pyc

@@ -1,12 +1,7 @@
 from structures.HashTable import HashTable
 # from collections import deque
-from structures.PriorityQueue import PriorityQueue
 from structures.Graphs.Graph import Graph
 from structures.Graphs.Node import Node
-from .EmergencyCenter import EmergencyCenter
-from .Incident import Incident
-# from services.Arrays import Arrays
-from services.SearchAlgorithms import SearchAlgorithms
 
 
 class RoadNetwork:
@@ -14,11 +9,7 @@ class RoadNetwork:
     def __init__(self, isAddressed=False):
         self.graph = Graph()
         self.isAddressed = isAddressed
-
         self.nodes = HashTable(1000)
-        self.incidents = HashTable(1000)
-        self.worstIncidents = PriorityQueue()
-        self.centers = HashTable(1000)
     
     def addNode(self, id):
         newNode = Node(id)

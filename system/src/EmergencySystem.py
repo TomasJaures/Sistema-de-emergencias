@@ -74,7 +74,7 @@ class EmergencySystem:
 
     def getIncidentsByTime(self) -> list[Incident]:
         incidents = self.incidentsByPriority.heap._btree.copy() #Sacar arreglo desde el heap
-        Incident.comparator = Incident.comparatorByTimestamp
+        Incident.comparator = Incident.comparatorByDatetime
         # No usaremos QUICKSORT, debido a que los datos van a estar algo ordenados debido a que el tiempo es un factor clave para la severidad, por ende, los datos van a estar algo ordenados
         incidentsByTime = Arrays.heapSort(incidents) 
         Incident.comparator = Incident.comparatorByPriority
@@ -100,22 +100,34 @@ class EmergencySystem:
         # - Ruta encontrada
         # - Distancia total
         # - Costo acumulado
-        _, routeFound, visitedNodes, totalDistance= SearchAlgorithms.dijkstra(startNode, lambda current: current == endNode)
-        return routeFound, visitedNodes, totalDistance
+        result = SearchAlgorithms.dijkstra(startNode, lambda current: current == endNode)
+        if result is not None:
+            _, routeFound, visitedNodes, totalDistance = result
+            return routeFound, visitedNodes, totalDistance
+        else:
+            return [], [], float("inf")
 
     # BFS
     def mostEfficientRouteToIncidentByBFS(self, incident: Incident) -> list:
         startNode = self.roadNetwork.nodes.search(incident.location)
         result = SearchAlgorithms.bfs(startNode, lambda current: isinstance(current.data, EmergencyCenter))
+
         if result is not None:
             _, routeFound, _ = result
+            routeFound.reverse()
             return routeFound
         else:
-            raise ValueError("Nodo no encotrado")
+            return []
     
     # DJIKSTRA
     def mostEfficientRouteToIncidentByDjikstra(self, incident: Incident) -> list:
         startNode = self.roadNetwork.nodes.search(incident.location)
         
-        _, routeFound, _, _ = SearchAlgorithms.dijkstra(startNode, lambda current: isinstance(current.data, EmergencyCenter))
-        return routeFound
+        result = SearchAlgorithms.dijkstra(startNode, lambda current: isinstance(current.data, EmergencyCenter))
+
+        if result is not None:
+            _, routeFound, _, _ = result
+            routeFound.reverse()
+            return routeFound
+        else:
+            return []

@@ -1,5 +1,3 @@
-import math
-
 """
 MAX HEAP
 """
@@ -9,9 +7,16 @@ class Heap:
     
     # Al ser un heap, la busqueda de un elemento toma un tiempo de O(n) :(
     def updateElement(self, element):
-        for e in self._btree:
-            if e == element:
-                e = element
+        for i in range(len(self._btree)):
+            if self._btree[i] == element:
+                self._btree[i] = element
+                self._siftDown(i)
+                nodeIdx = i
+                while nodeIdx > 0:
+                    parentIdx = (nodeIdx - 1) // 2
+                    if not self._siftUp(nodeIdx, parentIdx):
+                        break
+                    nodeIdx = parentIdx
                 return True
         return False
 

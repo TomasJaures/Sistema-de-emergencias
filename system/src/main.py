@@ -1,5 +1,7 @@
 from pathlib import Path
 
+BASE_DIR = Path(__file__).parent
+
 from models.RoadNetwork import RoadNetwork
 from models.Incident import Incident
 from models.EmergencyCenter import EmergencyCenter
@@ -9,22 +11,23 @@ from EmergencySystem import EmergencySystem
 from utils.CSV.FormatterCSV import FormatterCSV
 
 def main():
-    path = Path(__file__).parent.parent / "docs" / "graphs" / "graph1.csv"
+    print(f"BASEDIR: {BASE_DIR}")
+    datasetPath = BASE_DIR / "data" / "dataset_1"
+    nodes, edges = FormatterCSV.loadNodesCSV(datasetPath / "nodes.csv")
+    centers = FormatterCSV.loadCenters(datasetPath / "centers.csv")
+    incidents = FormatterCSV.loadIncidents(datasetPath / "incidents.csv")
 
-    nodes, edges = FormatterCSV.loadCSV(path)
-
-    rn = RoadNetwork(True)
+    rn = RoadNetwork(False)
     rn.addNodes(nodes)
     rn.addEdges(edges)
 
     system = EmergencySystem(rn)
 
-    center1 = EmergencyCenter(0, "Centro A", "P")
-    incident1 = Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE)
-    system.insertCenter(center1)
-    system.insertIncident(incident1)
-    system.insertIncident(Incident(2, "E", 5, datetime(2026, 5, 1), IncidentState.ACTIVE))
-    system.insertIncident(Incident(3, "I", 7, datetime(2026, 6, 2), IncidentState.ACTIVE))
+    for center in centers:
+        system.insertCenter(center)
+    
+    for incident in incidents:
+        system.insertIncident(incident)
     
     print(system.searchIncident(1).toString())
     system.updateIncidentState(1, IncidentState.CLOSED)
@@ -48,21 +51,23 @@ def main():
 
     print("Incidentes por tiempo: ")
     for i in system.getIncidentsByTime():
-        print(f"Tiempo: {i.timestamp}")
+        print(f"Tiempo: {i.date}")
     
     print("Incidentes por prioridad")
     for i in system.getIncidentsByPriority():
         print(f"Prioridad: {i.priority}")
 
     print("Desde algun centro al incidente: ")
-    routeFound, visitedNodes, totalDistance = system.mostEfficientRouteFromCenterToIncident(center1, incident1)
+    routeFound, visitedNodes, totalDistance = system.mostEfficientRouteFromCenterToIncident(centers[2], incidents[8])
     print(f"ruta encontrada: {routeFound}")
     print(f"Nodos visitados: {visitedNodes}")
     print(f"Distancia total: {totalDistance}")
     
-    print(f"Ruta mas eficiente segun BFS: {system.mostEfficientRouteToIncidentByBFS(incident1)}")
-    print(f"Ruta mas eficiente segun Djikstra: {system.mostEfficientRouteToIncidentByDjikstra(incident1)}")
-    
+    print()
+
+    print(f"Ruta mas eficiente segun BFS: {system.mostEfficientRouteToIncidentByBFS(incidents[8])}")
+    print(f"Ruta mas eficiente segun Djikstra: {system.mostEfficientRouteToIncidentByDjikstra(incidents[8])}")
+        
 
 
     

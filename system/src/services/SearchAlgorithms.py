@@ -38,21 +38,21 @@ class SearchAlgorithms:
 
     @staticmethod
     def dijkstra(startNode: Node, condition: Callable[[Node], bool]) -> tuple[Node, list, list, Number]:
-        heap = Heap() # Max heap
+        heap = Heap()
         previous = HashTable(capacity=1000)
         distances = HashTable(capacity=1000)
         visited = set()
         visitedDisplay = []
 
-        startNode.currentWeight = 0
-
         distances.insert(startNode, 0)
         previous.insert(startNode, None)
 
+        startNode.currentWeight = 0 
         heap.insert(startNode)
 
         while heap._btree:
             current = heap.extract()
+            
             if current in visited:
                 continue
 
@@ -66,17 +66,17 @@ class SearchAlgorithms:
                     path.append(node)
                     node = previous.search(node)
                 path.reverse()
-                return current, path, visitedDisplay, current.currentWeight
+                return current, path, visitedDisplay, distances.search(current)
 
             for adjacency, weight in current.adjacencies:
-                newWeight = current.currentWeight + weight
+                current_dist = distances.search(current)
+                newWeight = current_dist + weight
                 oldWeight = distances.search(adjacency)
 
                 if oldWeight is None or newWeight < oldWeight:
+                    distances.insert(adjacency, newWeight)
+                    previous.insert(adjacency, current)
                     adjacency.currentWeight = newWeight
-                    distances.insert(adjacency,newWeight)
-                    previous.insert(adjacency,current)
                     heap.insert(adjacency)
-
 
         return None
