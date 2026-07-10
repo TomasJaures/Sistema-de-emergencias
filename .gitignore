@@ -12,3 +12,5 @@ system/src/structures/Graphs/__pycache__/Graph.cpython-314.pyc
 system/src/structures/Graphs/__pycache__/Node.cpython-314.pyc
 system/src/__pycache__/EmergencySystem.cpython-314.pyc
 system/src/utils/__pycache__/IncidentState.cpython-314.pyc
+system/src/utils/__pycache__/FormatterCSV.cpython-314.pyc
+system/src/utils/CSV/__pycache__/FormatterCSV.cpython-314.pyc
