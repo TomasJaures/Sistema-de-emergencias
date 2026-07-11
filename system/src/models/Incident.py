@@ -64,3 +64,11 @@ class Incident:
     
     def __gt__(self, other):
         return Incident.comparator(self, other)
+    
+    def __eq__(self, value):
+        if isinstance(value, str):
+            return str(self.id) == value
+        return self.id == value.id
+    
+    def __hash__(self):
+        return hash(self.id)

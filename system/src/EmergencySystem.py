@@ -96,6 +96,7 @@ class EmergencySystem:
     def mostEfficientRouteFromCenterToIncident(self, center: EmergencyCenter, incident: Incident) -> tuple:
         startNode = self.roadNetwork.nodes.search(center.location)
         endNode = self.roadNetwork.nodes.search(incident.location)
+        
         # - Nodos visitados
         # - Ruta encontrada
         # - Distancia total

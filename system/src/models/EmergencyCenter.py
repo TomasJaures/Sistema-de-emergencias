@@ -14,3 +14,11 @@ class EmergencyCenter:
             f"name: {self.name}\n"
             f"Ubicacion: {self.location}"
         )
+    
+    def __eq__(self, value):
+        if isinstance(value, str):
+            return str(self.id) == value
+        return self.id == value.id
+    
+    def __hash__(self):
+        return hash(self.id)

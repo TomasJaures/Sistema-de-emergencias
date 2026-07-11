@@ -9,6 +9,8 @@ from datetime import datetime
 from utils.IncidentState import IncidentState
 from EmergencySystem import EmergencySystem
 from utils.CSV.FormatterCSV import FormatterCSV
+from utils.IncidentState import IncidentState
+from utils.IncidentTypes import IncidentTypes
 
 def main():
     print(f"BASEDIR: {BASE_DIR}")
@@ -22,24 +24,13 @@ def main():
     rn.addEdges(edges)
 
     system = EmergencySystem(rn)
-
-    for center in centers:
-        system.insertCenter(center)
+    for center in centers: system.insertCenter(center)
     
-    for incident in incidents:
-        system.insertIncident(incident)
+    for incident in incidents: system.insertIncident(incident)
     
     print(system.searchIncident(1).toString())
     system.updateIncidentState(1, IncidentState.CLOSED)
     print(system.searchIncident(1).toString())
-    
-    # removedIncident = system.removeIncident(1)
-    # if removedIncident is not None:
-    #     print("=== ELIMINADO ===")
-    #     print(removedIncident.toString())
-    #     system.insertIncident(Incident(1, "A", 10, datetime(2026, 7, 4), IncidentState.ACTIVE))
-    # else:
-    #     print("=== ERROR ===")
     
     print(f"Tabla hash de incidentes\n{system.getIncidentsHashTableStats()}")
 
@@ -58,15 +49,19 @@ def main():
         print(f"Prioridad: {i.priority}")
 
     print("Desde algun centro al incidente: ")
-    routeFound, visitedNodes, totalDistance = system.mostEfficientRouteFromCenterToIncident(centers[2], incidents[8])
+    
+    routeFound, visitedNodes, totalDistance = system.mostEfficientRouteFromCenterToIncident(centers[0], incidents[0])
+    
     print(f"ruta encontrada: {routeFound}")
     print(f"Nodos visitados: {visitedNodes}")
     print(f"Distancia total: {totalDistance}")
     
     print()
 
-    print(f"Ruta mas eficiente segun BFS: {system.mostEfficientRouteToIncidentByBFS(incidents[8])}")
-    print(f"Ruta mas eficiente segun Djikstra: {system.mostEfficientRouteToIncidentByDjikstra(incidents[8])}")
+    
+    print(f"Ruta mas eficiente segun BFS: {system.mostEfficientRouteToIncidentByBFS(incidents[0])}")
+    
+    print(f"Ruta mas eficiente segun Djikstra: {system.mostEfficientRouteToIncidentByDjikstra(incidents[0])}")
         
 
 
@@ -75,4 +70,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

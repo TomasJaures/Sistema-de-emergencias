@@ -3,10 +3,13 @@ class Node:
         self.data = data
         self.currentWeight = float("inf") # Para djikstra
         self.adjacencies = []  # Lista de tuplas (Nodo, peso)
+        self.parent = None
 
     def addAdjacency(self, node, weight):
         self.adjacencies.append((node, weight))
 
+    def setParent(self, parent):
+        self.parent = parent
     # Operaciones necesarias para el cumplimiento en varias estructuras de datos
     
     def __str__(self):
@@ -23,3 +26,6 @@ class Node:
     
     def __gt__(self, other):
         return self.currentWeight < other.currentWeight
+    
+    def __lt__(self, other):
+        return self.currentWeight > other.currentWeight
