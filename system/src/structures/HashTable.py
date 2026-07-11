@@ -6,7 +6,7 @@ class HashTable:
         self._elementSize = 0
         self._collisions = 0
         self._usedBuckets = 0
-        self.keys = set()
+        self.keys = []
 
     # _hashpolinomial
     def _hash(self, key):
@@ -22,11 +22,9 @@ class HashTable:
         return self._elementSize / self.capacity
 
     def insert(self, key, value):
-
         if key in self.keys:
             return False #Si ya se encuentra la llave
-
-        self.keys.add(key)
+        self.keys.append(key)
         bucket = self._buckets[self._hash(key)]
 
         if len(bucket) == 0:
@@ -84,13 +82,10 @@ class HashTable:
 
         return max
     
-    def getKeys(self) -> set:
+    def getKeys(self) -> list:
         return self.keys
 
     def getStats(self):
-        # TODO: Hacer reporte
-        # loadFactor = self.loadFactor()
-        # maxBucketSize = self.maxBuckEtelementSize()
         return (
             f"Factor de carga: {self.loadFactor()}\n"
             f"Colisiones: {self._collisions}\n"
