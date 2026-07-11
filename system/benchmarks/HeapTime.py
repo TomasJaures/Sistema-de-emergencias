@@ -22,10 +22,12 @@ def test_insert():
         times.append(end - start)
     return sizes, times
 
-
 def test_extract():
     sizes = [1000, 5000, 10000, 50000, 100000]
     times = []
+
+    for n in sizes:
+        values = [random.randint(1, 1000000) for _ in range(n)]
 
     for n in sizes:
         heap = Heap()
@@ -49,8 +51,6 @@ extract_sizes, extract_times = test_extract()
 print("Inserción")
 for size, t in zip(insertSizes, insertTimes):
     print(f"n={size}: {t:.6f} segundos")
-
-
 
 for size, t in zip(extract_sizes, extract_times):
     print(f"n={size}: {t:.6f} segundos")
